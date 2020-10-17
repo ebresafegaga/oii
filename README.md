@@ -89,7 +89,7 @@ type 'a vec_exist = VecExist : ('n, 'a) vec -> 'a vec_exist
 
 (* We don't have a type level "length" function to know the index of the vector before hand,
   so exitential types are a pretty good alternative. 
-  The only probelem is that we can't unwrap it anywhere because...  *)
+  The only probelem is that we just can't unwrap it anywhere we like because...  *)
 let rec of_list : 'a list -> 'a vec_exist = function
     | [] -> VecExist []
     | x :: xs -> 
