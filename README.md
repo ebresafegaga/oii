@@ -93,7 +93,7 @@ type 'a vec_exist = VecExist : ('n, 'a) vec -> 'a vec_exist
 let rec of_list : 'a list -> 'a vec_exist = function
     | [] -> VecExist []
     | x :: xs -> 
-        let VecExist xs = of_list xs in 
+        let VecExist xs = of_list xs in (* you're entitled to a recursive call, never forget that *)
         VecExist (x :: xs)
         
 (* same idea *)
@@ -154,7 +154,7 @@ let rec vtake : type n m. (n, m) lte -> n nat -> (m, 'a) vec -> (n, 'a) vec = fu
     | LteZero, Zero, _ -> []
     | LteSucc proof, Succ k, x :: xs -> x :: vtake proof k xs 
 
-(* Descirbes EXACTLY how to split a number into 2 parts *)
+(* Describes EXACTLY how to split a number into 2 parts *)
 type ('m, 'k, 'n) split = 
     | SplitZero : (zero, zero, zero) split
     | SplitLeft : ('m, 'k, 'n) split -> ('m succ, 'k succ, 'n) split
