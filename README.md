@@ -236,4 +236,4 @@ let rec un_wrap : type a b. (a, b) ta_list -> (a -> b) = function
         fun x -> f (g x)
 ```
 
-Feel free to send in PRs and hack on it!
+Please send in PRs and hack on it!
