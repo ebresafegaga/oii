@@ -45,6 +45,11 @@ let rec index : type n. (n, 'a) vec -> n fin -> 'a = fun v f -> match v, f with
     | x :: xs, FS i -> index xs i
     | _ -> . (* refutation case makes the OCaml type checker work a little harder to verify totality *)
 
+(* Yes, the OCaml typechecker can see this is not possible (zero fin has no inhabitants), 
+   so it gives you a way to say: "this is BS"*)
+let magic : zero fin -> 'a = function 
+    | _ -> . 
+
 (*
   No need for optionals!
   Note that there's no need to handle the [] case and the OCaml compiler can see that 

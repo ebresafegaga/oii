@@ -17,5 +17,10 @@ let str number =
 
 let strings numbers = List.map str numbers  
 
+
+type shape = Rect | Triangle | Square 
+
+
+
 let () = 
     Printf.printf "hello, from caml!"

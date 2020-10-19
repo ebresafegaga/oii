@@ -96,6 +96,7 @@ let rec zip : type n. (n, 'a) vec -> (n, 'b) vec -> (n, 'a * 'b) vec = fun xs ys
     | x :: xs, y :: ys -> (x, y) :: zip xs ys 
     | _ -> .
 
+
 let rec v_zip : type n. (n, 'a) vec -> (n, 'b) vec -> (n, 'a * 'b) vec = fun xs ys ->
     let n = length xs in
     let f = vec n (fun a b -> a, b) in
