@@ -46,7 +46,7 @@ let rec index : type n. (n, 'a) vec -> n fin -> 'a = fun v f -> match v, f with
     | _ -> . (* refutation case makes the OCaml type checker work a little harder to verify totality *)
 
 (* Yes, the OCaml typechecker can see this is not possible (zero fin has no inhabitants), 
-   so it gives you a way to say: "this is BS" 
+   so it gives you a way to say: "this is BS!" 
    aka "ex falso quodlibet" if you look from the Curry-Howard lens *)
 let magic : zero fin -> 'a = function 
     | _ -> . 
