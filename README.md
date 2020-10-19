@@ -179,7 +179,7 @@ let rec split : type n k m. (n, k, m) split -> (k, 'a) vec -> (n, 'a) vec * (m, 
         let ns, ms = split proof xs in 
         ns, m :: ms
         
-(* ... and join then back together, maintaining the order of the original vector*)
+(* ... and join them back together, maintaining the order of the original vector*)
 let rec join : type n k m. (n, k, m) split -> (n, 'a) vec -> (m, 'a) vec -> (k, 'a) vec = fun proof ns ms -> 
     match proof, ns, ms with 
     | SplitZero, [], [] -> []
