@@ -233,8 +233,7 @@ type 'r f =
     {f : 'a. 'a mystery_box -> 'r}
         [@@unboxed]
 
-let unwrap (type a) (box : a mystery_box) {f} = 
-    match box with
+let unwrap (type a) (box : a mystery_box) {f} = match box with
     | EmptyBox -> None 
     | IntBox (_, xs) -> Some (f xs)
     | StringBox (_, xs) -> Some (f xs)
