@@ -7,7 +7,7 @@ This is just a mini library to have a taste of dependent types with GADTs in Oca
 Here are some examples 
 
 ```ocaml 
-(* Natural numbers, inductively *)
+(* Natural numbers *)
 type zero = Z
 type 'a succ = S
 
