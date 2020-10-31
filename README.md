@@ -1,6 +1,6 @@
 # Oii
 
-This is just a simple library to have a taste of dependent types with GADTs in Ocaml 
+This is just a mini library to have a taste of dependent types with GADTs in Ocaml 
 
 ---
 
