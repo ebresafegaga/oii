@@ -5,7 +5,6 @@ type ('n, 'm) lte =
     | LteZero : (zero, 'm) lte
     | LteSucc : ('n, 'm) lte -> ('n succ, 'm succ) lte 
 
-
 type ('m, 'n) opf = 
     | OpfZero : (zero, zero) opf 
     | OpfSame : ('m, 'n) opf -> ('m succ, 'n succ) opf 
@@ -24,7 +23,7 @@ let rec opf : type m n. (m, n) opf -> m fin -> n fin = fun f i -> match f, i wit
     | OpfRight _, FZ -> FZ 
     | OpfRight prev, i -> fweak (opf prev i)
     (* | OpfZero, FZ -> FZ  -- zero fin has no inhabitants  *)
-    | _ -> .
+    | OpfZero, _ -> .
 
 (*  id operation for opf *)
 let rec i_opf : type n. n nat -> (n, n) opf = function 
@@ -58,15 +57,18 @@ let rec split : type n k m. (n, k, m) split -> (k, 'a) vec -> (n, 'a) vec * (m, 
         let ns, ms = split proof xs in 
         ns, m :: ms
 
-let rec join : type n k m. (n, k, m) split -> (n, 'a) vec -> (m, 'a) vec -> (k, 'a) vec = fun proof ns ms -> 
-    match proof, ns, ms with 
-    | SplitZero, [], [] -> []
-    | SplitLeft proof, n :: ns, ms -> n :: join proof ns ms
-    | SplitRight proof, ns, m :: ms -> m :: join proof ns ms 
+let rec join : type n k m. (n, k, m) split -> (n, 'a) vec -> (m, 'a) vec -> (k, 'a) vec = 
+    fun proof ns ms -> 
+        match proof, ns, ms with 
+        | SplitZero, [], [] -> []
+        | SplitLeft proof, n :: ns, ms -> n :: join proof ns ms
+        | SplitRight proof, ns, m :: ms -> m :: join proof ns ms 
 
-let rec lte_trans : type l m n. (l, m) lte -> (m, n) lte -> (l, n) lte = fun p q -> match p, q with 
-    | LteZero, _ -> LteZero
-    | LteSucc p, LteSucc q -> LteSucc (lte_trans p q)
+let rec lte_trans : type l m n. (l, m) lte -> (m, n) lte -> (l, n) lte =
+    fun p q ->
+        match p, q with 
+        | LteZero, _ -> LteZero
+        | LteSucc p, LteSucc q -> LteSucc (lte_trans p q)
 
 
 type ('m, 'n) matrix = ('m, ('n, int) vec) vec 
@@ -83,4 +85,21 @@ let rec transpose : type m n. (m, n) matrix -> (n, m) matrix = fun xss ->
     | [] -> vec n []
     | x :: xs -> vec n (fun x y -> x :: y) <*> x <*> transpose xs
 
+(* Strictly less than : n < m *)
 
+type ('n, 'm) lt = 
+    | LtZero : (zero, 'm succ) lt
+    | LtSucc : ('n, 'm) lt -> ('n succ, 'm succ) lt
+
+type 'n term = 
+    | App : 'n term * 'n term -> 'n term
+    | Lam : 'n succ term -> 'n term
+    | Var : 'ix nat * ('ix, 'm) lt -> 'm term
+    
+let const : zero term = 
+    Lam (Lam (Var (Succ Zero, LtSucc LtZero)))
+
+let rec eval : type ty. ty term -> _ = function     
+    | Var (nat, proof) -> "" 
+    | App (_, _) -> ""
+    | Lam _ -> ""

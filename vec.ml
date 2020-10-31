@@ -29,8 +29,7 @@ let rec fweak : type n. n fin -> n succ fin = function
 
 let rec vtab : type n. n nat -> (n fin -> 'x) -> (n, 'x) vec = fun n f -> match n with 
     | Zero -> []
-    | Succ k -> 
-        f FZ :: vtab k (fun i -> f (FS i))
+    | Succ k -> f FZ :: vtab k (fun i -> f (FS i))
 
 (* let rec vtab2 : type n. n nat -> (n fin -> 'x) -> (n, 'x) vec = fun n f -> match n with 
     | Zero -> []
@@ -43,9 +42,9 @@ let rec length : type n. (n, 'a) vec -> n nat = function
     | _ :: xs -> Succ (length xs)
 
 let rec vproj : type n. (n, 'a) vec -> n fin -> 'a = fun v f -> match v, f with 
-    | x :: xs, FZ -> x
-    | x :: xs, FS i -> vproj xs i
-    | _ -> .
+    | x :: _, FZ -> x
+    | _ :: xs, FS i -> vproj xs i
+    | [], _ -> .
 
 let rec vec  : type n. n nat -> 'a -> (n, 'a) vec = fun n thing -> match n with
     | Zero -> []
@@ -93,9 +92,7 @@ let rec filter : type n. ('a -> bool) -> (n, 'a) vec -> 'a vec_exist = fun f -> 
 
 let rec zip : type n. (n, 'a) vec -> (n, 'b) vec -> (n, 'a * 'b) vec = fun xs ys -> match xs, ys with 
     | [], [] -> []
-    | x :: xs, y :: ys -> (x, y) :: zip xs ys 
-    | _ -> .
-
+    | x :: xs, y :: ys -> (x, y) :: zip xs ys
 
 let rec v_zip : type n. (n, 'a) vec -> (n, 'b) vec -> (n, 'a * 'b) vec = fun xs ys ->
     let n = length xs in
@@ -107,15 +104,6 @@ type 'a five = 'a succ succ succ succ succ
 let take5 : type n. (n five, 'a) vec -> (zero five, 'a) vec = function 
     | a :: b :: c :: d :: e :: _ -> [a;b;c;d;e]
     | _ -> .
-
-let l () : 'n nat = 
-    let VecExist xs = of_list [1;2;3;4;5] in
-    let len = length xs in
-    Obj.magic len
-
-let fff x = 
-    match x with 
-    | `Str -> ""
     
 let magic : zero fin -> 'a = function 
     | _ -> .
