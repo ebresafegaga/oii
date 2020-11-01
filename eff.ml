@@ -45,7 +45,20 @@ let rec findGood acc  = function
             then findGood (Left :: acc) left 
             else findGood (Right :: acc) right
 
-
+let findGood2 tree = 
+    let module D = struct exception DeadEnd end in 
+    let open D in 
+    let rec findGood2 acc tree =
+        let rec loop = function 
+            | Leaf Good -> List.rev acc
+            | Leaf Bad -> raise DeadEnd 
+            | Node (left, right) ->  
+                match findGood2 (Left :: acc) left with 
+                | result -> result  
+                | exception DeadEnd -> findGood2 (Right :: acc) right
+        in 
+        loop tree
+    in findGood2 [] tree
 let tree = 
     Node (
         Node (Leaf Bad, Leaf Bad), 
@@ -105,7 +118,14 @@ let actual =
     | k -> k 
     | effect Fail _ -> [] 
 
+let actual2 = findGood2 tree
+
 let () = 
     let f = function Left -> print_endline "Left" | Right -> print_endline "Right" in
-    actual
-    |> List.iter f
+    (match actual=actual2 with 
+     | true -> print_endline "they are equal"
+     | false -> print_endline "they are NOT equal");
+    actual2 |> List.iter f;
+    print_endline "";
+    actual |> List.iter f
+
