@@ -58,7 +58,11 @@ let findGood2 tree =
                 | exception DeadEnd -> findGood2 (Right :: acc) right
         in 
         loop tree
-    in findGood2 [] tree
+    in 
+    match findGood2 [] tree with 
+    | k -> k 
+    | exception DeadEnd -> []
+    
 let tree = 
     Node (
         Node (Leaf Bad, Leaf Bad), 
@@ -80,7 +84,7 @@ let tree =
         Node (
             Node (
                 Leaf Bad, 
-                Node (Leaf Bad, Leaf Good)), 
+                Node (Leaf Bad, Leaf Bad)), 
             Leaf Bad)))), 
             Leaf Bad)))), 
             Leaf Bad)))), 
