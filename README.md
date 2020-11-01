@@ -1,13 +1,13 @@
 # Oii
 
-This is just a simple library to have a taste of dependent types with GADTs in Ocaml 
+This is just a mini library to have a taste of dependent types with GADTs in Ocaml 
 
 ---
 
 Here are some examples 
 
 ```ocaml 
-(* Natural numbers, inductively *)
+(* Natural numbers *)
 type zero = Z
 type 'a succ = S
 
