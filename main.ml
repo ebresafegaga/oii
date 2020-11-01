@@ -23,4 +23,4 @@ type shape = Rect | Triangle | Square
 
 
 let () = 
-    Printf.printf "hello, from caml!"
+    print_endline "hey"

@@ -1,4 +1,5 @@
 
+
 open Vec 
 
 type ('n, 'm) lte = 
@@ -99,7 +100,17 @@ type 'n term =
 let const : zero term = 
     Lam (Lam (Var (Succ Zero, LtSucc LtZero)))
 
+let t = 
+    Lam (
+        Lam (
+            (Lam (
+                App (Var (Succ (Succ Zero), LtSucc (LtSucc LtZero)),
+                     (Var (Zero, LtZero)))))))
+
 let rec eval : type ty. ty term -> _ = function     
     | Var (nat, proof) -> "" 
-    | App (_, _) -> ""
+    | App (_, _) 
     | Lam _ -> ""
+
+let magic : type n. (n, zero) lt -> 'a = function 
+    | _ -> .

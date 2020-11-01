@@ -8,7 +8,6 @@ type 'a nat =
     | Zero : zero nat
     | Succ : 'a nat -> 'a succ nat
 
-
 type ('a, 'b) vec = 
     | [] : (zero, 'b) vec
     | (::) : 'b * ('n, 'b) vec -> ('n succ, 'b) vec
@@ -87,21 +86,24 @@ let rec filter : type n. ('a -> bool) -> (n, 'a) vec -> 'a vec_exist = fun f -> 
     | x :: xs -> 
         let VecExist xs = filter f xs in 
         if f x 
-        then VecExist xs 
-        else VecExist (x :: xs)
+            then VecExist xs 
+            else VecExist (x :: xs)
 
-let rec zip : type n. (n, 'a) vec -> (n, 'b) vec -> (n, 'a * 'b) vec = fun xs ys -> match xs, ys with 
-    | [], [] -> []
-    | x :: xs, y :: ys -> (x, y) :: zip xs ys
+let rec zip : type n. (n, 'a) vec -> (n, 'b) vec -> (n, 'a * 'b) vec = 
+    fun xs ys -> 
+        match xs, ys with 
+        | [], [] -> []
+        | x :: xs, y :: ys -> (x, y) :: zip xs ys
 
-let rec v_zip : type n. (n, 'a) vec -> (n, 'b) vec -> (n, 'a * 'b) vec = fun xs ys ->
-    let n = length xs in
-    let f = vec n (fun a b -> a, b) in
-    f <*> xs <*> ys
+let rec v_zip : type n. (n, 'a) vec -> (n, 'b) vec -> (n, 'a * 'b) vec = 
+    fun xs ys ->
+        let n = length xs in
+        let f = vec n (fun a b -> a, b) in
+        f <*> xs <*> ys
 
-type 'a five = 'a succ succ succ succ succ 
+type 'a more_than_five = 'a succ succ succ succ succ 
 
-let take5 : type n. (n five, 'a) vec -> (zero five, 'a) vec = function 
+let take5 : type n. (n more_than_five, 'a) vec -> (zero more_than_five, 'a) vec = function 
     | a :: b :: c :: d :: e :: _ -> [a;b;c;d;e]
     | _ -> .
     

@@ -1,4 +1,4 @@
-
+open Vec
 
 type empty = E
 type ('left, 'item, 'right) branch = B
