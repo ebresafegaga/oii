@@ -9,6 +9,6 @@ RUN opam switch create 4.10.0 && \
     eval $(opam env) && \
     opam switch 4.10.0
 
-RUN opam install ocaml-lsp-server
+RUN opam install utop dune merlin
         
 # RUN opam install utop dune merlin 
