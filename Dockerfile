@@ -1,7 +1,8 @@
-FROM gitpod/workspace-full
+# FROM gitpod/workspace-full
+
+FROM ocaml/opam2:4.10
 
 USER root
 
-FROM ocaml/opam2:4.10
         
 # RUN opam install utop dune merlin 
