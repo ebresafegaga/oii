@@ -1,6 +1,0 @@
-(executable
-    (name main)
-    (preprocess (pps ppx_deriving.show))
-    (libraries 
-      core 
-      core_bench))
